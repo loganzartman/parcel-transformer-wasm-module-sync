@@ -1,0 +1,16 @@
+{
+  "name": "parcel-transformer-wasm-module-sync",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.js",
+  "author": "Logan Zartman",
+  "license": "MIT",
+  "engines": {
+    "parcel": "2.x"
+  },
+  "packageManager": "pnpm@10.12.1",
+  "dependencies": {
+    "@parcel/plugin": "^2.15.2",
+    "dedent": "^1.6.0"
+  }
+}
