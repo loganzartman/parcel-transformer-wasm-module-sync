@@ -1,0 +1,28 @@
+FROM rust
+
+RUN cargo install wasm-bindgen-cli wasm-pack
+RUN rustup target add wasm32-unknown-unknown
+
+WORKDIR /app
+VOLUME /app/node_modules
+
+# install curl
+RUN apt update && apt install curl -y
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+
+# install node
+RUN bash -c "source $NVM_DIR/nvm.sh && nvm install 22"
+
+# setup node
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+COPY ./package.json ./pnpm-lock.yaml /app 
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store bash -c "source $NVM_DIR/nvm.sh && corepack pnpm install --frozen-lockfile"
+
+ENV IN_CONTAINER true
+
+COPY ./docker-entry.sh /app/docker-entry.sh
+ENTRYPOINT ["/bin/bash", "-c", "/app/docker-entry.sh \"$@\"", "--"]
+CMD ["/bin/bash"]

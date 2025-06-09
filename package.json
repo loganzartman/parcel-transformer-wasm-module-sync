@@ -9,8 +9,20 @@
     "parcel": "2.x"
   },
   "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "docker:shell": "docker compose run --build --rm test",
+    "test:local": "pnpm docker:shell bash -c 'pnpm test:raw'",
+    "test:raw": "node --test"
+  },
   "dependencies": {
     "@parcel/plugin": "^2.15.2",
     "dedent": "^1.6.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@parcel/config-default": "^2.15.2",
+    "@parcel/core": "^2.15.2",
+    "@types/node": "^22.15.30",
+    "zx": "^8.5.5"
   }
 }

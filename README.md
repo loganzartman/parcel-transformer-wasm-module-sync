@@ -44,3 +44,11 @@ This Parcel transformer adds support for imports like this by doing the followin
 3. Use synchronous `WebAssembly.Module` and `WebAssembly.Instance` APIs to instantiate, passing in required imports
 
 The base64 encoding adds some storage overhead (~33%), and the synchronous instantiation is less efficient than modern streaming `WebAssembly` APIs, but the tradeoff is that it works. Dynamic imports can be used to load the modules asynchronously.
+
+## development
+
+### running tests in container
+
+1. install Docker (with Docker Compose)
+2. start Docker
+3. `pnpm test:local`
