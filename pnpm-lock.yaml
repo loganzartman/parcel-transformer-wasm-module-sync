@@ -24,6 +24,9 @@ importers:
       '@parcel/core':
         specifier: ^2.15.2
         version: 2.15.2(@swc/helpers@0.5.17)
+      '@parcel/transformer-js':
+        specifier: ^2.15.2
+        version: 2.15.2(@parcel/core@2.15.2(@swc/helpers@0.5.17))
       '@types/node':
         specifier: ^22.15.30
         version: 22.15.30
