@@ -1,7 +1,17 @@
 {
   "name": "parcel-transformer-wasm-module-sync",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Logan Zartman",
+  "description": "Support synchronous WASM module imports in Parcel 2",
+  "keywords": [
+    "parcel",
+    "parcel-transformer",
+    "WebAssembly",
+    "wasm",
+    "wasm-bindgen",
+    "wasm-pack",
+    "wasm-module"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/loganzartman/parcel-transformer-wasm-module-sync.git"
@@ -17,7 +27,7 @@
   "main": "./src/index.js",
   "files": ["dist"],
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && cp -r src package.json README.md dist",
+    "build": "rm -rf dist && mkdir dist && cp -r src/* dist",
     "lint": "biome check",
     "lint:fix": "biome check --fix",
     "docker:shell": "docker compose run --build --rm test",

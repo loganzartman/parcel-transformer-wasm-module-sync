@@ -23,14 +23,29 @@ Add transformer to your `.parcelrc`, installing `@parcel/config-default` if nece
 }
 ```
 
-Now you're ready to build wasm-pack libraries.
+Now you're ready to build wasm-pack libraries:
+
+```js
+import { myFunction } from "./pkg/my_project.js";
+
+myFunction();
+```
+
+Or import a wasm file as a module:
+
+```js
+import * as wasm from "./myModule.wasm";
+
+// etc
+console.log(wasm.memory);
+```
 
 ## background
 
 Tools like wasm-pack emit JavaScript that contains synchronous imports to `.wasm` modules, like this:
 
 ```js
-import * as wasm from './my_module.wasm';
+import * as wasm from "./my_module.wasm";
 ```
 
 Typically, these tools are used in combination with Webpack, which has support for this.
@@ -51,4 +66,4 @@ The base64 encoding adds some storage overhead (~33%), and the synchronous insta
 
 1. install Docker (with Docker Compose)
 2. start Docker
-3. `pnpm test:local`
+3. `pnpm test`
