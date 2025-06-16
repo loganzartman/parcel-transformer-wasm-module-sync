@@ -1,5 +1,5 @@
-import {greet} from './pkg/test_wasm_bindgen_simple.js';
+import { greet } from "./pkg/test_wasm_bindgen_simple.js";
 
-export function run() {
-  greet('World');
+export function doGreet(callback) {
+  greet("World", callback);
 }
