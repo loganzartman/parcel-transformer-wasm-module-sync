@@ -1,15 +1,15 @@
-import { Parcel } from "@parcel/core";
-import { existsSync, readdirSync } from "node:fs";
-import path from "node:path";
-import { $ } from "zx";
+import { existsSync, readdirSync } from 'node:fs';
+import path from 'node:path';
+import { Parcel } from '@parcel/core';
+import { $ } from 'zx';
 
 export function buildWasmBindgen({ dir }) {
   if (!process.env.IN_CONTAINER) {
-    console.error("Test is not running in test Docker container!");
+    console.error('Test is not running in test Docker container!');
   }
 
-  const buildDir = "target/wasm32-unknown-unknown/release";
-  const outDir = "pkg";
+  const buildDir = 'target/wasm32-unknown-unknown/release';
+  const outDir = 'pkg';
 
   const $$ = $.sync({
     verbose: true,
@@ -19,7 +19,7 @@ export function buildWasmBindgen({ dir }) {
   $$`cargo build --lib --release --target wasm32-unknown-unknown`;
 
   const wasmFilename = readdirSync(path.join(dir, buildDir)).find((file) =>
-    file.endsWith(".wasm")
+    file.endsWith('.wasm'),
   );
 
   if (!wasmFilename) {
@@ -29,33 +29,33 @@ export function buildWasmBindgen({ dir }) {
   $$`wasm-bindgen ${path.join(
     dir,
     buildDir,
-    wasmFilename
+    wasmFilename,
   )} --out-dir=${outDir} --target bundler`;
 
   if (!existsSync(path.join(dir, outDir))) {
     throw new Error(`Expected ${outDir} to exist after wasm-bindgen build`);
   }
 
-  console.log("✨ wasm-bindgen build success!");
+  console.log('✨ wasm-bindgen build success!');
 }
 
 export async function bundle({ dir, source, configPath }) {
   const bundler = new Parcel({
-    defaultConfig: "@parcel/config-default",
+    defaultConfig: '@parcel/config-default',
     config: path.join(dir, configPath),
     entries: path.join(dir, source),
     targets: {
       main: {
         // these two are load-bearing
-        outputFormat: "esmodule",
-        context: "node",
+        outputFormat: 'esmodule',
+        context: 'node',
 
         isLibrary: true,
         optimize: false,
-        distDir: path.join(dir, "dist"),
+        distDir: path.join(dir, 'dist'),
       },
     },
-    mode: "production",
+    mode: 'production',
   });
 
   const { buildTime } = await bundler.run();
