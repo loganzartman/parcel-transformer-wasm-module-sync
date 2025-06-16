@@ -39,12 +39,25 @@ export function buildWasmBindgen({ dir }) {
   console.log("✨ wasm-bindgen build success!");
 }
 
-export async function bundle({ entry, configPath }) {
+export async function bundle({ dir, source, configPath }) {
   const bundler = new Parcel({
-    entries: entry,
-    config: configPath,
+    defaultConfig: "@parcel/config-default",
+    config: path.join(dir, configPath),
+    entries: path.join(dir, source),
+    targets: {
+      main: {
+        // these two are load-bearing
+        outputFormat: "esmodule",
+        context: "node",
+
+        isLibrary: true,
+        optimize: false,
+        distDir: path.join(dir, "dist"),
+      },
+    },
+    mode: "production",
   });
 
-  const { bundleGraph, buildTime } = await bundler.run();
-  const bundles = bundleGraph.getBundles();
+  const { buildTime } = await bundler.run();
+  console.log(`✨ Parcel built in ${buildTime}ms`);
 }
